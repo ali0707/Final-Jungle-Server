@@ -1,6 +1,21 @@
 const User = require("../../models/vendeur");
 const jwt = require("jsonwebtoken");
+//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
+const bcrypt = require("bcrypt");
+const shortid = require("shortid");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
+const sendgridTransport = require("nodemailer-sendgrid-transport");
+
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 exports.signup = (req, res) => {
   User.findOne({ email: req.body.email }).exec((error, user) => {
     if (user)
@@ -64,8 +79,15 @@ exports.signup = (req, res) => {
       }
 
       if (data) {
+        transporter.sendMail({
+          to: req.body.email,
+          from: "ali.bensaid@esprit.tn",
+          subject: "signup success",
+          html: "<h1> welcome to Jungle </h1> ",
+        });
         return res.status(201).json({
           //user:data
+
           message: "Vendeur created successfully",
         });
       }
@@ -159,4 +181,65 @@ exports.signout = (req, res) => {
   res.status(200).json({
     message: "Signout successfully...!",
   });
+};
+
+exports.resetPass = (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+    }
+    const token = buffer.toString("hex");
+    User.findOne({ email: req.body.email }).then((user) => {
+      if (!user) {
+        return res
+          .status(422)
+          .json({ error: "Userx dont exists with that email" });
+      }
+      user.resetToken = token;
+      user.expireToken = Date.now() + 3600000;
+      console.log("my token", token);
+      user.save().then((result) => {
+        // transporter.sendMail({
+        //   to: user.email,
+
+        //   from: "no-replay@insta.com",
+        //   subject: "password reset",
+        //   html: `
+        //           <p>You requested for password reset</p>
+        //           <h5>click in this <a href="">link</a> to reset password</h5>
+        //           `,
+        // });
+
+        transporter.sendMail({
+          to: req.body.email,
+          from: "ali.bensaid@esprit.tn",
+          subject: "reset pass",
+          html: `<h5>click in this <a href="${token}">link</a> to reset password</h5>`,
+        });
+        res.json({ message: "check your email" });
+      });
+    });
+  });
+};
+
+exports.Newpass = (req, res) => {
+  const newPassword = req.body.password;
+  const sentToken = req.body.token;
+  User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: "Try again session expired" });
+      }
+      bcrypt.hash(newPassword, 12).then((hashedpassword) => {
+        user.password = hashedpassword;
+        user.resetToken = undefined;
+        user.expireToken = undefined;
+        user.save().then((saveduser) => {
+          res.json({ message: "password updated success" });
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

@@ -37,7 +37,7 @@ exports.initialData = async (req, res) => {
 
   const products = await Product.find({ createdBy: req.user._id })
     .select(
-      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity stock_moyen stock_initial stock_final nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockage stock_recommande"
+      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity stock_moyen stock_initial stock_final nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockage rec stock_recommande"
     )
     .populate({ path: "category", select: "_id name" })
     .exec();
@@ -48,49 +48,54 @@ exports.initialData = async (req, res) => {
     )
     .populate({ path: "produits", select: "_id designation prix" })
     .exec();
-
+  const calendars = await Calendar.find({})
+    .select(
+      "_id image nom date_debut date_fin fin_enregistrement caracteristique nbr_produits nbr_vendeurs status produits"
+    )
+    .exec();
   const orders = await Order.find({})
     .populate("items.productId", "name")
     .exec();
 
   const commandes = await Commande.find({})
     .select(
-      "_id num date_cmd EtatDeLivraison ModeDePaiement StatutCmd DateLivraison ref_produit nom_prod nom_client tel_client motif montant"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant slug  description"
     )
     .exec();
 
   const commanderetour = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd slug description"
+      "_id EtatDeLivraison motif num date_cmd marque ModeDePaiement StatutCmd montant slug description"
     )
     .find({ EtatDeLivraison: "retour" })
     .exec();
 
   const commandelivre = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement montant StatutCmd slug description"
     )
     .find({ EtatDeLivraison: "livré" })
     .exec();
 
   const commandeEncours = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant slug description"
     )
     .find({ EtatDeLivraison: "encours" })
     .exec();
 
   const commandeechec = await Commande.find({})
     .select(
-      "_id num date_cmd EtatDeLivraison ModeDePaiement StatutCmd DateLivraison ref_produit nom_prod nom_client tel_client motif montant"
+      "_id EtatDeLivraison motif num  nom_client date_cmd marque ModeDePaiement StatutCmd montant slug description"
     )
     .find({ EtatDeLivraison: "echec" })
     .exec();
 
-  const calendars = await Calendar.find({})
+  const remboursements = await Commande.find({})
     .select(
-      "_id image nom date_debut date_fin fin_enregistrement caracteristique nbr_produits nbr_vendeurs status produits"
+      "_id EtatDeLivraison dateRemboursement montant num date_cmd marque ModeDePaiement StatutCmd slug description"
     )
+    .find({ EtatDeLivraison: "remboursement" })
     .exec();
 
   res.status(200).json({
@@ -104,6 +109,7 @@ exports.initialData = async (req, res) => {
     commandeechec,
     commanderetour,
     commandelivre,
+    remboursements,
     calendars,
   });
 };
