@@ -21,6 +21,8 @@ const CommandeRoutes = require("./routes/Commande");
 const adminOrderRoute = require("./routes/admin/order.routes");
 const couponRoutes = require("./routes/coupon");
 const calendarRoute = require("./routes/calendar");
+const eventProductRoute = require("./routes/eventProduct");
+const joinRequestRoute = require("./routes/joinRequest");
 
 //environment variable or you can say constants
 env.config();
@@ -58,6 +60,9 @@ app.use("/api", CommandeRoutes);
 app.use("/api", adminOrderRoute);
 app.use("/api", couponRoutes);
 app.use("/api", calendarRoute);
+app.use("/api", eventProductRoute);
+app.use("/api", joinRequestRoute);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

@@ -52,7 +52,7 @@ exports.updateCoupon = async (req, res) => {
 
     .select("_id status")
 
-    .populate({ path: "product", select: "_id designation" })
+    .populate({ path: "produits", select: "_id designation" })
 
     .exec();
 

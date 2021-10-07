@@ -227,7 +227,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
     },
     stock_recommande: {
-      type: Number,
+      type: String,
     },
     nbr_de_vente: {
       type: Number,

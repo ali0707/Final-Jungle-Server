@@ -250,7 +250,7 @@ exports.deleteProductById = (req, res) => {
 exports.getProducts = async (req, res) => {
   const products = await Product.find({ createdBy: req.user._id })
     .select(
-      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockag estock_recommande"
+      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockage stock_recommande"
     )
     .populate({ path: "category", select: "img name" })
     .exec();
@@ -283,6 +283,7 @@ exports.updateProduct = async (req, res, next) => {
     quantity: req.body.quantity,
     prix: req.body.prix,
     description: req.body.description,
+    couleur: req.body.couleur,
     enPromo: req.body.enPromo,
     promo: req.body.promo,
     prix_promo: req.body.prix_promo,
