@@ -14,6 +14,9 @@ exports.CreateCommande = (req, res) => {
     tel_client,
     montant,
     motif,
+    Qte,
+    destination,
+    prix_promo,
     createdBy,
   } = req.body;
 
@@ -31,6 +34,10 @@ exports.CreateCommande = (req, res) => {
     tel_client,
     motif,
     montant,
+    Qte,
+    destination,
+    prix_promo,
+    createdBy,
   });
 
   commande.save((error, commande) => {

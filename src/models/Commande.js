@@ -49,6 +49,18 @@ const CommandeSchema = new mongoose.Schema({
     required: true,
     type: Number,
   },
+  Qte: {
+    required: true,
+    type: Number,
+  },
+  destination: {
+    required: true,
+    type: String,
+  },
+  prix_promo: {
+    required: true,
+    type: Number,
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vendeur",
