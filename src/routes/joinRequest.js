@@ -6,7 +6,7 @@ const {
 } = require("../common-middleware");
 const {
     createJoinRequest,
-
+    getAllRequests,
     getJoinRequestByCalendarId,
 
 } = require("../controller/joinRequest");
@@ -27,10 +27,10 @@ router.get("/calendar/joinRequest/:calendrierId", getJoinRequestByCalendarId);
 //     deleteProductById
 // );
 router.get(
-    "/calendrier/requests",
+    "/allRequests",
     requireSignin,
     vendeurMiddleware,
-
+    getAllRequests,
 );
 
 

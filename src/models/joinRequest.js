@@ -9,9 +9,20 @@ const requestSchema = new mongoose.Schema(
 
         products: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: "eventProduct",
+            ref: "Product",
             required: true,
         }],
+
+        status: {
+            type: String,
+            enum: ["onHold", "approved", "refuesd"],
+            default: "onHold",
+        },
+
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Vendeur",
+        },
 
         createdAt: Date,
         updatedAt: Date,

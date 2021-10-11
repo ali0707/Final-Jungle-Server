@@ -76,7 +76,7 @@ exports.getProductsBySlug = (req, res) => {
 };
 
 exports.getJoinRequestByCalendarId = (req, res) => {
-    const { calendarId } = req.params;
+    var { calendarId } = req.params.calendrierId;
     if (calendarId) {
         JoinRequest.findOne({ calendar: calendarId }).exec((error, joinRequest) => {
             if (error) return res.status(400).json({ error });
@@ -106,7 +106,17 @@ exports.deleteProductById = (req, res) => {
 
 
 //getAllProducts
+exports.getAllRequests = async (req, res) => {
+    const allRequests = await JoinRequest.find({ createdBy: req.user._id })
+        .select(
+            "_id calendar products status"
+        )
+        .populate({ path: "products", select: "_id designation prix prix_promo stock_promo" })
+        .populate({ path: "calendar", select: "_id nom date_debut date_fin caracteristique" })
+        .exec();
 
+    res.status(200).json({ allRequests });
+};
 
 
 //update product

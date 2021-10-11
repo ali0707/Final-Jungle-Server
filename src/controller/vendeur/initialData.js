@@ -4,6 +4,7 @@ const Order = require("../../models/order");
 const Commande = require("../../models/Commande");
 const Coupon = require("../../models/coupon");
 const Calendar = require("../../models/calendar");
+const joinRequest = require("../../models/joinRequest");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -48,6 +49,16 @@ exports.initialData = async (req, res) => {
     )
     .populate({ path: "produits", select: "_id designation prix" })
     .exec();
+
+  const joinRequests = await joinRequest.find({ createdBy: req.user._id })
+    .select(
+      "_id calendar products status"
+    )
+    .populate({ path: "products", select: "_id designation prix prix_promo stock_promo" })
+    .populate({ path: "calendar", select: "_id nom date_debut date_fin caracteristique" })
+    .exec();
+
+
   const calendars = await Calendar.find({})
     .select(
       "_id image nom date_debut date_fin fin_enregistrement caracteristique nbr_produits nbr_vendeurs status produits"
@@ -111,5 +122,6 @@ exports.initialData = async (req, res) => {
     commandelivre,
     remboursements,
     calendars,
+    joinRequests
   });
 };
