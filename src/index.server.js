@@ -17,6 +17,7 @@ const pageRoutes = require("./routes/admin/page");
 const addressRoutes = require("./routes/address");
 const orderRoutes = require("./routes/order");
 const CommandeRoutes = require("./routes/Commande");
+const TarificationRoutes = require("./routes/tarification");
 
 const adminOrderRoute = require("./routes/admin/order.routes");
 const couponRoutes = require("./routes/coupon");
@@ -62,7 +63,7 @@ app.use("/api", couponRoutes);
 app.use("/api", calendarRoute);
 app.use("/api", eventProductRoute);
 app.use("/api", joinRequestRoute);
-
+app.use("/api", TarificationRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
