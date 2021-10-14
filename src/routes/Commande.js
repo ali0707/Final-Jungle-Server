@@ -1,15 +1,8 @@
 const express = require("express");
 //const {  } = require('../controller/category');
-const {
-  requireSignin,
-  vendeurMiddleware,
-} = require("../common-middleware");
-const {
-  CreateCommande, getCommande,
-
-} = require("../controller/Commande");
+const { requireSignin, vendeurMiddleware } = require("../common-middleware");
+const { CreateCommande, getCommande } = require("../controller/Commande");
 const router = express.Router();
-
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -32,12 +25,10 @@ router.post(
   "/commande/getcommandes",
   requireSignin,
   vendeurMiddleware,
-  getCommande,
+  getCommande
 );
 // router.get("/products/:slug", getProductsBySlug);
 //router.get('/category/getcategory', getCategories);
 // router.get("/product/:productId", getProductDetailsById);
-
-
 
 module.exports = router;

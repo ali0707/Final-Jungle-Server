@@ -61,10 +61,21 @@ const CommandeSchema = new mongoose.Schema({
     required: true,
     type: Number,
   },
+  ENVOI_PAR: {
+    required: true,
+    type: String,
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Vendeur",
   },
+  products: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Commande", CommandeSchema);

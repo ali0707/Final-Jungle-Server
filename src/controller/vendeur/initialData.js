@@ -5,6 +5,7 @@ const Commande = require("../../models/Commande");
 const Coupon = require("../../models/coupon");
 const Calendar = require("../../models/calendar");
 const joinRequest = require("../../models/joinRequest");
+const Tarif = require("../../models/tarification");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -50,14 +51,27 @@ exports.initialData = async (req, res) => {
     .populate({ path: "produits", select: "_id designation prix" })
     .exec();
 
-  const joinRequests = await joinRequest.find({ createdBy: req.user._id })
-    .select(
-      "_id calendar products status"
-    )
-    .populate({ path: "products", select: "_id designation prix prix_promo stock_promo" })
-    .populate({ path: "calendar", select: "_id nom date_debut date_fin caracteristique" })
+  const joinRequests = await joinRequest
+    .find({ createdBy: req.user._id })
+    .select("_id calendar products status")
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo",
+    })
+    .populate({
+      path: "calendar",
+      select: "_id nom date_debut date_fin caracteristique",
+    })
     .exec();
 
+  const tarifs = await Tarif.find({})
+    .select(" num categories taux")
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo",
+    })
+
+    .exec();
 
   const calendars = await Calendar.find({})
     .select(
@@ -70,42 +84,67 @@ exports.initialData = async (req, res) => {
 
   const commandes = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant slug  description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
+
     .exec();
 
   const commanderetour = await Commande.find({})
     .select(
-      "_id EtatDeLivraison motif num date_cmd marque ModeDePaiement StatutCmd montant slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
     .find({ EtatDeLivraison: "retour" })
     .exec();
 
   const commandelivre = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement montant StatutCmd slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
     .find({ EtatDeLivraison: "livré" })
     .exec();
 
   const commandeEncours = await Commande.find({})
     .select(
-      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
     .find({ EtatDeLivraison: "encours" })
     .exec();
 
   const commandeechec = await Commande.find({})
     .select(
-      "_id EtatDeLivraison motif num  nom_client date_cmd marque ModeDePaiement StatutCmd montant slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
     .find({ EtatDeLivraison: "echec" })
     .exec();
 
   const remboursements = await Commande.find({})
     .select(
-      "_id EtatDeLivraison dateRemboursement montant num date_cmd marque ModeDePaiement StatutCmd slug description"
+      "_id EtatDeLivraison num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
     )
+    .populate({
+      path: "products",
+      select: "_id designation prix prix_promo stock_promo quantity",
+    })
     .find({ EtatDeLivraison: "remboursement" })
     .exec();
 
@@ -122,6 +161,7 @@ exports.initialData = async (req, res) => {
     commandelivre,
     remboursements,
     calendars,
-    joinRequests
+    joinRequests,
+    tarifs,
   });
 };

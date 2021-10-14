@@ -8,7 +8,7 @@ exports.CreateTarif = (req, res) => {
     categories,
     taux,
     createdBy,
-    // createdBy: req.user._id,
+    createdBy: req.user._id,
   });
 
   tarif.save((error, tarif) => {
@@ -20,7 +20,7 @@ exports.CreateTarif = (req, res) => {
 };
 
 exports.getTarif = async (req, res) => {
-  const Tarifs = await Tarif.find({}).select(" num categories taux").exec();
+  const tarifs = await Tarif.find({}).select(" num categories taux").exec();
 
-  res.status(200).json({ Tarifs });
+  res.status(200).json({ tarifs });
 };
