@@ -72,6 +72,7 @@ exports.createProduct = (req, res) => {
     stock_initial,
     stock_final,
     stock_moyen,
+    tva
   } = req.body;
 
   let productPictures = [];
@@ -156,6 +157,7 @@ exports.createProduct = (req, res) => {
     stock_initial,
     stock_final,
     stock_moyen,
+    tva,
   });
 
   product.save((error, product) => {

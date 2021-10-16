@@ -70,6 +70,10 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
 
+    type: {
+      type: String,
+    },
+
     ecran: {
       type: String,
     },
