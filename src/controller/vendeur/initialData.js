@@ -52,11 +52,24 @@ exports.initialData = async (req, res) => {
     .exec();
 
   const joinRequests = await joinRequest
+    .find()
+    .select("_id calendar products status")
+    .populate({
+      path: "products",
+      select: "_id designation reference prix prix_promo stock_promo nbr_de_vente nbr_de_vue",
+    })
+    .populate({
+      path: "calendar",
+      select: "_id nom date_debut date_fin caracteristique",
+    })
+    .exec();
+
+  const myJoinRequests = await joinRequest
     .find({ createdBy: req.user._id })
     .select("_id calendar products status")
     .populate({
       path: "products",
-      select: "_id designation prix prix_promo stock_promo",
+      select: "_id designation reference prix prix_promo stock_promo nbr_de_vente nbr_de_vue",
     })
     .populate({
       path: "calendar",
@@ -163,5 +176,6 @@ exports.initialData = async (req, res) => {
     calendars,
     joinRequests,
     tarifs,
+    myJoinRequests
   });
 };
