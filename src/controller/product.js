@@ -36,6 +36,8 @@ exports.createProduct = (req, res) => {
     metaDesc,
     url,
     motCle,
+    taux,
+
     //
     graph,
     //
@@ -72,7 +74,8 @@ exports.createProduct = (req, res) => {
     stock_initial,
     stock_final,
     stock_moyen,
-    tva
+    tva,
+    quantityCommande,
   } = req.body;
 
   let productPictures = [];
@@ -157,7 +160,9 @@ exports.createProduct = (req, res) => {
     stock_initial,
     stock_final,
     stock_moyen,
+    taux,
     tva,
+    quantityCommande,
   });
 
   product.save((error, product) => {
@@ -252,7 +257,7 @@ exports.deleteProductById = (req, res) => {
 exports.getProducts = async (req, res) => {
   const products = await Product.find({ createdBy: req.user._id })
     .select(
-      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockage stock_recommande"
+      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux_rotation duree_stockage taux stock_recommande quantityCommande"
     )
     .populate({ path: "category", select: "img name" })
     .exec();

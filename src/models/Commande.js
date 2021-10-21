@@ -7,7 +7,7 @@ const CommandeSchema = new mongoose.Schema({
   },
 
   date_cmd: {
-    type: String,
+    type: Date,
     required: true,
   },
   ModeDePaiement: {
@@ -38,7 +38,7 @@ const CommandeSchema = new mongoose.Schema({
   },
 
   DateLivraison: {
-    type: String,
+    type: Date,
     required: true,
   },
   motif: {

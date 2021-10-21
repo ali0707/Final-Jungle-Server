@@ -248,6 +248,13 @@ const productSchema = new mongoose.Schema(
       type: Number,
     },
 
+    taux: {
+      type: Number,
+    },
+    quantityCommande: {
+      type: Number,
+    },
+
     createdAt: Date,
     updatedAt: Date,
   },

@@ -106,7 +106,8 @@ exports.getAllRequests = async (req, res) => {
     .select("_id calendar products status")
     .populate({
       path: "products",
-      select: "_id designation prix prix_promo stock_promo",
+      select:
+        "_id designation prix prix_promo stock_promo category quantityCommande taux ",
     })
     .populate({
       path: "calendar",
@@ -123,7 +124,8 @@ exports.getCommande = async (req, res) => {
     )
     .populate({
       path: "products",
-      select: "_id designation prix prix_promo stock_promo quantity",
+      select:
+        "_id designation prix prix_promo stock_promo category quantityCommande taux ",
     })
     .exec();
 
@@ -136,7 +138,8 @@ exports.getCommanderetour = async (req, res) => {
     )
     .populate({
       path: "products",
-      select: "_id designation prix prix_promo stock_promo",
+      select:
+        "_id designation prix prix_promo stock_promo category quantityCommande taux ",
     })
     .exec();
 
