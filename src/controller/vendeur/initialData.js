@@ -23,6 +23,7 @@ function createCategories(categories, parentId = null) {
       slug: cate.slug,
       parentId: cate.parentId,
       type: cate.type,
+      taux: cate.taux,
       children: createCategories(categories, cate._id),
     });
   }
@@ -41,7 +42,7 @@ exports.initialData = async (req, res) => {
     .select(
       "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity stock_moyen stock_initial stock_final nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux taux_rotation duree_stockage rec stock_recommande quantityCommande"
     )
-    .populate({ path: "category", select: "_id name" })
+    .populate({ path: "category", select: "_id name taux" })
     .exec();
 
   const coupons = await Coupon.find({ createdBy: req.user._id })
@@ -130,6 +131,10 @@ exports.initialData = async (req, res) => {
       path: "products",
       select:
         "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+    })
+    .populate({
+      path: "category",
+      select: "_id name taux ",
     })
     .find({ EtatDeLivraison: "livré" })
     .exec();

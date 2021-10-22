@@ -146,7 +146,6 @@ exports.createProduct = (req, res) => {
     nbrFoyer,
     pose,
     ouverture,
-
     //stat
     taux_de_conversion,
     nbr_de_vue,
@@ -178,7 +177,7 @@ exports.createProduct = (req, res) => {
 exports.getProductsBySlug = (req, res) => {
   const { slug } = req.params;
   Category.findOne({ slug: slug })
-    .select("_id type")
+    .select("_id type taux")
     .exec((error, category) => {
       if (error) {
         return res.status(400).json({ error });

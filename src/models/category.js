@@ -18,6 +18,11 @@ const categorySchema = new mongoose.Schema(
     parentId: {
       type: String,
     },
+    taux: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
   },
   { timestamps: true }
 );
