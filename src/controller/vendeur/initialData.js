@@ -106,7 +106,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux  reference",
     })
 
     .exec();
@@ -118,7 +118,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux reference ",
     })
     .find({ EtatDeLivraison: "retour" })
     .exec();
@@ -130,7 +130,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux reference ",
     })
     .populate({
       path: "category",
@@ -146,7 +146,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux reference ",
     })
     .find({ EtatDeLivraison: "encours" })
     .exec();
@@ -158,7 +158,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux reference ",
     })
     .find({ EtatDeLivraison: "echec" })
     .exec();
@@ -170,7 +170,7 @@ exports.initialData = async (req, res) => {
     .populate({
       path: "products",
       select:
-        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux ",
+        "_id designation prix prix_promo stock_promo quantity category quantityCommande taux  reference",
     })
     .find({ EtatDeLivraison: "remboursement" })
     .exec();
