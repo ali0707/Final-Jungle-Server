@@ -255,6 +255,10 @@ const productSchema = new mongoose.Schema(
       type: Number,
     },
 
+    stock_promo: {
+      type: Number,
+    },
+
     createdAt: Date,
     updatedAt: Date,
   },

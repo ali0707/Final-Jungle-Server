@@ -14,14 +14,7 @@ const CommandeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  ref_produit: {
-    type: String,
-    required: true,
-  },
-  nom_prod: {
-    type: String,
-    required: true,
-  },
+
   nom_client: {
     type: String,
     required: true,
@@ -45,22 +38,12 @@ const CommandeSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  montant: {
-    required: true,
-    type: Number,
-  },
-  Qte: {
-    required: true,
-    type: Number,
-  },
+
   destination: {
     required: true,
     type: String,
   },
-  prix_promo: {
-    required: true,
-    type: Number,
-  },
+
   ENVOI_PAR: {
     required: true,
     type: String,

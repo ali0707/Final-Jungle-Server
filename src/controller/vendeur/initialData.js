@@ -40,9 +40,9 @@ exports.initialData = async (req, res) => {
 
   const products = await Product.find({ createdBy: req.user._id })
     .select(
-      "_id createdAt status designation reference marque prix quantity slug description productPictures category couleur garantie minQuantity stock_moyen stock_initial stock_final nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux taux_rotation duree_stockage rec stock_recommande quantityCommande"
+      "_id createdAt status designation reference marque prix quantity stock_promo slug description productPictures category couleur garantie minQuantity stock_moyen stock_initial stock_final nbr_de_vente enPromo promo dateDebutPromo dateFinPromo prix_promo taux_de_retour type poids ecran ram systemeExploitation processeur disqueDur metaTitle metaDesc url motCle graph smartTV withRecepteur ecranTactile normeHd resolution stockage capacite puissance vitesses matiere alimentation mode refroidissement volume classe largeur nbrFoyer pose ouverture taux_de_conversion nbr_de_vue quantite_vendue revenu best_price taux taux_rotation duree_stockage rec stock_recommande quantityCommande"
     )
-    .populate({ path: "category", select: "_id name taux" })
+    .populate({ path: "category", select: "_id name taux parentId" })
     .exec();
 
   const coupons = await Coupon.find({ createdBy: req.user._id })
@@ -125,7 +125,7 @@ exports.initialData = async (req, res) => {
 
   const commandelivre = await Commande.find({})
     .select(
-      "_id EtatDeLivraison motif num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte  nom_client tel_client nom_prod  ref_produit DateLivraison slug  description"
+      "_id EtatDeLivraison motif num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte nom_client tel_client nom_prod ref_produit DateLivraison slug  description"
     )
     .populate({
       path: "products",

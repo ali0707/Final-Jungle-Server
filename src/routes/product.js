@@ -12,6 +12,7 @@ const {
   deleteProductById,
   getProducts,
   updateProduct,
+  updateProductTest
 } = require("../controller/product");
 const router = express.Router();
 
@@ -44,6 +45,13 @@ router.put(
   vendeurMiddleware,
   upload.array("productPicture"),
   updateProduct
+);
+
+router.put(
+  "/product/updateTest",
+  requireSignin,
+  vendeurMiddleware,
+  updateProductTest
 );
 
 module.exports = router;

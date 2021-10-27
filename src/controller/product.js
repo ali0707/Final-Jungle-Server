@@ -76,6 +76,7 @@ exports.createProduct = (req, res) => {
     stock_moyen,
     tva,
     quantityCommande,
+    stock_promo
   } = req.body;
 
   let productPictures = [];
@@ -162,6 +163,7 @@ exports.createProduct = (req, res) => {
     taux,
     tva,
     quantityCommande,
+    stock_promo
   });
 
   product.save((error, product) => {
@@ -295,6 +297,27 @@ exports.updateProduct = async (req, res, next) => {
     prix_promo: req.body.prix_promo,
     dateDebutPromo: req.body.dateDebutPromo,
     dateFinPromo: req.body.dateFinPromo,
+    _id: req.body._id,
+  };
+  console.log(req.body._id);
+
+  const product = await Product.findByIdAndUpdate(req.body._id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "your product has been updated!",
+  });
+};
+
+exports.updateProductTest = async (req, res, next) => {
+  const newUserData = {
+    promo: req.body.promo,
+    stock_promo: req.body.stock_promo,
+    prix_promo: req.body.prix_promo,
     _id: req.body._id,
   };
   console.log(req.body._id);
