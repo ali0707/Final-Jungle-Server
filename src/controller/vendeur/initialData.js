@@ -6,6 +6,7 @@ const Coupon = require("../../models/coupon");
 const Calendar = require("../../models/calendar");
 const joinRequest = require("../../models/joinRequest");
 const Tarif = require("../../models/tarification");
+const Abonnement = require("../../models/abonnement");
 
 function createCategories(categories, parentId = null) {
   const categoryList = [];
@@ -50,6 +51,13 @@ exports.initialData = async (req, res) => {
       "_id produits titre description code remise limite status date_debut date_fin"
     )
     .populate({ path: "produits", select: "_id designation prix" })
+    .exec();
+
+  const abonnements = await Abonnement.find({ vendeur: req.user._id })
+    .select(
+      "_id montant date status vendeur"
+    )
+    .populate({ path: "vendeur", select: "_id firstName lastName" })
     .exec();
 
   const joinRequests = await joinRequest
@@ -191,5 +199,6 @@ exports.initialData = async (req, res) => {
     joinRequests,
     tarifs,
     myJoinRequests,
+    abonnements
   });
 };
