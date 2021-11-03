@@ -128,6 +128,7 @@ exports.signin = (req, res) => {
           cin,
           registre,
           patente,
+          createdAt
         } = user;
         res.cookie("token", token, { expiresIn: "1d" });
         res.status(200).json({
@@ -152,6 +153,8 @@ exports.signin = (req, res) => {
             cin,
             registre,
             patente,
+            createdAt,
+
           },
         });
       } else {

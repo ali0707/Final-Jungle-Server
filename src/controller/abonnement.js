@@ -9,6 +9,7 @@ exports.createAbonnement = (req, res) => {
 
         date,
 
+        status,
 
     } = req.body;
 
@@ -18,6 +19,8 @@ exports.createAbonnement = (req, res) => {
         montant,
 
         date,
+
+        status,
     });
 
     abo.save((error, abon) => {

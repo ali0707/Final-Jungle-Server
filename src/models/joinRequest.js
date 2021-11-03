@@ -15,8 +15,8 @@ const requestSchema = new mongoose.Schema(
 
         status: {
             type: String,
-            enum: ["onHold", "approved", "refuesd"],
-            default: "onHold",
+            enum: ["En attente", "confirmé", "refusé"],
+            default: "En attente",
         },
 
         createdBy: {

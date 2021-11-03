@@ -22,7 +22,6 @@ exports.CreateCommande = (req, res) => {
     date_cmd,
     EtatDeLivraison,
     ModeDePaiement,
-    createdBy: req.user._id,
     StatutCmd,
     DateLivraison,
     nom_client,
@@ -30,7 +29,7 @@ exports.CreateCommande = (req, res) => {
     motif,
     destination,
     ENVOI_PAR,
-    createdBy,
+    createdBy: req.user._id,
     products,
   });
 
