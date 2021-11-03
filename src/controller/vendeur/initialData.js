@@ -147,7 +147,7 @@ exports.initialData = async (req, res) => {
     .find({ EtatDeLivraison: "livré" })
     .exec();
 
-  const allCommandelivre = await Commande.find({})
+  const livres = await Commande.find({})
     .select(
       "_id EtatDeLivraison motif num date_cmd marque ModeDePaiement StatutCmd montant ENVOI_PAR prix_promo destination Qte nom_client tel_client nom_prod ref_produit DateLivraison slug  description"
     )
@@ -160,7 +160,6 @@ exports.initialData = async (req, res) => {
       path: "category",
       select: "_id name taux ",
     })
-    .find({ EtatDeLivraison: "livré" })
     .exec();
 
   const commandeEncours = await Commande.find({ createdBy: req.user._id })
@@ -216,6 +215,6 @@ exports.initialData = async (req, res) => {
     tarifs,
     myJoinRequests,
     abonnements,
-    allCommandelivre
+    livres,
   });
 };
