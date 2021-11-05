@@ -107,7 +107,7 @@ exports.getAllRequests = async (req, res) => {
 };
 
 exports.getCommande = async (req, res) => {
-  const Commandes = await Commande.find({})
+  const Commandes = await Commande.find({ createdBy: req.user._id })
     .select(
       "_id num date_cmd EtatDeLivraison ModeDePaiement StatutCmd DateLivraison ref_produit nom_prod nom_client products tel_client motif montant"
     )
@@ -121,7 +121,7 @@ exports.getCommande = async (req, res) => {
   res.status(200).json({ Commandes });
 };
 exports.getCommanderetour = async (req, res) => {
-  const Commandes = await Commande.find({})
+  const Commandes = await Commande.find({ createdBy: req.user._id })
     .select(
       "_id num date_cmd EtatDeLivraison ModeDePaiement StatutCmd DateLivraison ref_produit nom_prod nom_client tel_client motif montant"
     )

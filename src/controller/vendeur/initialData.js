@@ -54,9 +54,7 @@ exports.initialData = async (req, res) => {
     .exec();
 
   const abonnements = await Abonnement.find({ vendeur: req.user._id })
-    .select(
-      "_id montant date status vendeur"
-    )
+    .select("_id montant date status vendeur")
     .populate({ path: "vendeur", select: "_id firstName lastName" })
     .exec();
 
@@ -88,7 +86,7 @@ exports.initialData = async (req, res) => {
     })
     .exec();
 
-  const tarifs = await Tarif.find({})
+  const tarifs = await Tarif.find({ createdBy: req.user._id })
     .select(" num categories taux")
     .populate({
       path: "products",
@@ -215,6 +213,10 @@ exports.initialData = async (req, res) => {
     tarifs,
     myJoinRequests,
     abonnements,
+<<<<<<< Updated upstream
     livres,
+=======
+    allCommandelivre,
+>>>>>>> Stashed changes
   });
 };
