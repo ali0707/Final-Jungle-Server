@@ -213,10 +213,6 @@ exports.initialData = async (req, res) => {
     tarifs,
     myJoinRequests,
     abonnements,
-<<<<<<< Updated upstream
     livres,
-=======
-    allCommandelivre,
->>>>>>> Stashed changes
   });
 };
